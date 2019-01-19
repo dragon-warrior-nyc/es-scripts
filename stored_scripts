@@ -1,0 +1,26 @@
+curl -X POST "localhost:9200/_scripts/calculate-score" -H 'Content-Type: application/json' -d'
+{
+  "script": {
+    "lang": "painless",
+    "source": "Math.log(_score * 2) + params.my_modifier"
+  }
+}
+'
+
+curl -X GET "localhost:9200/_scripts/calculate-score"
+
+{
+  "explain": true,
+  "query": {
+    "function_score": {
+      "script_score": {
+        "script": {
+          "id": "calculate-score",
+          "params": {
+            "my_modifier": 2
+          }
+        }
+      }
+    }
+  }
+}
