@@ -20,3 +20,15 @@ POST /_scripts/painless/_execute
     "params": {"q": 1357974856, "b": 1357974856}
   }
 }
+
+POST /_scripts/painless/_execute
+{
+  "script":{
+    "source": """
+      long u = params.q ^ params.b; 
+      long uCount = u - ((u >> 1) & -613566757) - ((u >> 2) & 1227133513); 
+      return ((uCount + (uCount >> 3)) & -954437177) % 63;
+      """,
+    "params": {"q": 1, "b": 2}
+  }
+}
